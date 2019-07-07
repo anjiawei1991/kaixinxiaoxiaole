@@ -1,0 +1,36 @@
+# deployment 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xiaoxiaole
+spec:
+  selector:
+    matchLabels:
+      run: xiaoxiaole
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: xiaoxiaole
+    spec:
+      containers:
+      - name: xiaoxiaole
+        image: anjiawei/xiaoxiaole
+        ports:
+        - containerPort: 80
+
+---
+
+# service
+apiVersion: v1
+kind: Service 
+metadata:
+  name: xiaoxiaole
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8081
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: xiaoxiaole 
